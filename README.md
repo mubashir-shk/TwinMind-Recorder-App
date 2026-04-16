@@ -2,6 +2,12 @@
 
 A voice recording app with transcription and summary generation built with Kotlin, Jetpack Compose, MVVM, and Hilt.
 
+## 📸 Screenshots
+
+| Dashboard | Recording | Summary |
+|----------|------------|----------|
+| ![Dashboard](screenshots/screenshot1.png) | ![Recording](screenshots/screenshot2.png) | ![Summary](screenshots/screenshot3.png) |
+
 ## Features Implemented
 
 ### ✅ Core Features
