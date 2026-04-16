@@ -50,14 +50,6 @@ A voice recording app with transcription and summary generation built with Kotli
 3. Run on device/emulator with API 24+
 4. Grant microphone and notification permissions when prompted
 
-## Building APK
-
-```bash
-./gradlew assembleDebug
-```
-
-APK will be at: `app/build/outputs/apk/debug/app-debug.apk`
-
 ## Architecture Diagram
 
 ```
