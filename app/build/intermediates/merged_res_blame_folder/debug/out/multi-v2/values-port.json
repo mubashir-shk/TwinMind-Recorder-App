@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.twinmind.recorder.app-mergeDebugResources-76:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\mubashir.s\\.gradle\\caches\\transforms-3\\a6230ce50e5ac0e94a42e790711365ed\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}
