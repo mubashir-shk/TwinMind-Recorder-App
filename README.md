@@ -4,9 +4,9 @@ A voice recording app with transcription and summary generation built with Kotli
 
 ## 📸 Screenshots
 
-| Dashboard | Recording | Summary |
-|----------|------------|----------|
-| ![Dashboard](./screenshots/screenshot1.png) | ![Recording](./screenshots/screenshot2.png) | ![Summary](./screenshots/screenshot3.png) |
+| Dashboard                                  | Recording                                   | Summary                                   |
+|--------------------------------------------|---------------------------------------------|-------------------------------------------|
+| ![Dashboard](./screenshots/screenshot1.jpg) | ![Recording](./screenshots/screenshot2.jpg) | ![Summary](./screenshots/screenshot3.jpg) |
 
 ## Features Implemented
 
