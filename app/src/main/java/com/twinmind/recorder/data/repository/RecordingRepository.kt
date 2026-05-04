@@ -14,8 +14,11 @@ class RecordingRepository @Inject constructor(
     private val sessionDao: SessionDao,
     private val audioChunkDao: AudioChunkDao
 ) {
+    // --- Sessions ---
     fun getAllSessions(): Flow<List<SessionEntity>> = sessionDao.getAllSessions()
     fun getSessionById(id: String): Flow<SessionEntity?> = sessionDao.getSessionById(id)
+    suspend fun getSessionsByStatus(status: SessionStatus): List<SessionEntity> =
+        sessionDao.getSessionByStatus(status)
     suspend fun getSessionByIdOnce(id: String): SessionEntity? = sessionDao.getSessionByIdOnce(id)
     suspend fun createSession(session: SessionEntity) = sessionDao.insertSession(session)
     suspend fun updateSessionStatus(id: String, status: SessionStatus) = sessionDao.updateStatus(id, status)
@@ -24,9 +27,14 @@ class RecordingRepository @Inject constructor(
     suspend fun updateSummary(id: String, summary: String, title: String, actionItems: String, keyPoints: String) =
         sessionDao.updateSummary(id, summary, title, actionItems, keyPoints, SessionStatus.COMPLETED)
     suspend fun updateError(id: String, error: String) = sessionDao.updateError(id, error, SessionStatus.ERROR)
+
+    // --- Audio Chunks ---
     suspend fun saveChunk(chunk: AudioChunkEntity) = audioChunkDao.insertChunk(chunk)
     suspend fun getChunksForSession(sessionId: String) = audioChunkDao.getChunksForSession(sessionId)
     suspend fun getUntranscribedChunks(sessionId: String) = audioChunkDao.getUntranscribedChunks(sessionId)
     suspend fun markChunkTranscribed(id: String, transcript: String) = audioChunkDao.markTranscribed(id, transcript)
     suspend fun incrementChunkRetry(id: String) = audioChunkDao.incrementRetry(id)
+
+    // Fixed: was referencing non-existent `chunkDao`, use `audioChunkDao` instead
+    suspend fun getChunkById(chunkId: String): AudioChunkEntity? = audioChunkDao.getById(chunkId)
 }

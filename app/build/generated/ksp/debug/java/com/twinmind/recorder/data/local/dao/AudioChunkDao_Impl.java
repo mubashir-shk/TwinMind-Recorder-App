@@ -3,6 +3,7 @@ package com.twinmind.recorder.data.local.dao;
 import android.database.Cursor;
 import android.os.CancellationSignal;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityInsertionAdapter;
 import androidx.room.RoomDatabase;
@@ -305,6 +306,67 @@ public final class AudioChunkDao_Impl implements AudioChunkDao {
             _tmpRetryCount = _cursor.getInt(_cursorIndexOfRetryCount);
             _item = new AudioChunkEntity(_tmpId,_tmpSessionId,_tmpFilePath,_tmpChunkIndex,_tmpCreatedAt,_tmpDurationMs,_tmpIsTranscribed,_tmpTranscript,_tmpRetryCount);
             _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
+  @Override
+  public Object getById(final String id, final Continuation<? super AudioChunkEntity> $completion) {
+    final String _sql = "SELECT * FROM audio_chunks WHERE id = ? LIMIT 1";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindString(_argIndex, id);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<AudioChunkEntity>() {
+      @Override
+      @Nullable
+      public AudioChunkEntity call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfSessionId = CursorUtil.getColumnIndexOrThrow(_cursor, "sessionId");
+          final int _cursorIndexOfFilePath = CursorUtil.getColumnIndexOrThrow(_cursor, "filePath");
+          final int _cursorIndexOfChunkIndex = CursorUtil.getColumnIndexOrThrow(_cursor, "chunkIndex");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final int _cursorIndexOfDurationMs = CursorUtil.getColumnIndexOrThrow(_cursor, "durationMs");
+          final int _cursorIndexOfIsTranscribed = CursorUtil.getColumnIndexOrThrow(_cursor, "isTranscribed");
+          final int _cursorIndexOfTranscript = CursorUtil.getColumnIndexOrThrow(_cursor, "transcript");
+          final int _cursorIndexOfRetryCount = CursorUtil.getColumnIndexOrThrow(_cursor, "retryCount");
+          final AudioChunkEntity _result;
+          if (_cursor.moveToFirst()) {
+            final String _tmpId;
+            _tmpId = _cursor.getString(_cursorIndexOfId);
+            final String _tmpSessionId;
+            _tmpSessionId = _cursor.getString(_cursorIndexOfSessionId);
+            final String _tmpFilePath;
+            _tmpFilePath = _cursor.getString(_cursorIndexOfFilePath);
+            final int _tmpChunkIndex;
+            _tmpChunkIndex = _cursor.getInt(_cursorIndexOfChunkIndex);
+            final long _tmpCreatedAt;
+            _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
+            final long _tmpDurationMs;
+            _tmpDurationMs = _cursor.getLong(_cursorIndexOfDurationMs);
+            final boolean _tmpIsTranscribed;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsTranscribed);
+            _tmpIsTranscribed = _tmp != 0;
+            final String _tmpTranscript;
+            if (_cursor.isNull(_cursorIndexOfTranscript)) {
+              _tmpTranscript = null;
+            } else {
+              _tmpTranscript = _cursor.getString(_cursorIndexOfTranscript);
+            }
+            final int _tmpRetryCount;
+            _tmpRetryCount = _cursor.getInt(_cursorIndexOfRetryCount);
+            _result = new AudioChunkEntity(_tmpId,_tmpSessionId,_tmpFilePath,_tmpChunkIndex,_tmpCreatedAt,_tmpDurationMs,_tmpIsTranscribed,_tmpTranscript,_tmpRetryCount);
+          } else {
+            _result = null;
           }
           return _result;
         } finally {

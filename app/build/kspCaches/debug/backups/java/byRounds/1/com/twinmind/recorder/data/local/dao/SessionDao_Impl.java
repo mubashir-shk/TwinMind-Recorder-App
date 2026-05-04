@@ -689,6 +689,95 @@ public final class SessionDao_Impl implements SessionDao {
     }, $completion);
   }
 
+  @Override
+  public Object getSessionByStatus(final SessionStatus status,
+      final Continuation<? super List<SessionEntity>> $completion) {
+    final String _sql = "SELECT * FROM sessions WHERE status = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    final String _tmp = __converters.fromStatus(status);
+    _statement.bindString(_argIndex, _tmp);
+    final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
+    return CoroutinesRoom.execute(__db, false, _cancellationSignal, new Callable<List<SessionEntity>>() {
+      @Override
+      @NonNull
+      public List<SessionEntity> call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "title");
+          final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
+          final int _cursorIndexOfDurationMs = CursorUtil.getColumnIndexOrThrow(_cursor, "durationMs");
+          final int _cursorIndexOfStatus = CursorUtil.getColumnIndexOrThrow(_cursor, "status");
+          final int _cursorIndexOfTranscript = CursorUtil.getColumnIndexOrThrow(_cursor, "transcript");
+          final int _cursorIndexOfSummary = CursorUtil.getColumnIndexOrThrow(_cursor, "summary");
+          final int _cursorIndexOfSummaryTitle = CursorUtil.getColumnIndexOrThrow(_cursor, "summaryTitle");
+          final int _cursorIndexOfActionItems = CursorUtil.getColumnIndexOrThrow(_cursor, "actionItems");
+          final int _cursorIndexOfKeyPoints = CursorUtil.getColumnIndexOrThrow(_cursor, "keyPoints");
+          final int _cursorIndexOfErrorMessage = CursorUtil.getColumnIndexOrThrow(_cursor, "errorMessage");
+          final List<SessionEntity> _result = new ArrayList<SessionEntity>(_cursor.getCount());
+          while (_cursor.moveToNext()) {
+            final SessionEntity _item;
+            final String _tmpId;
+            _tmpId = _cursor.getString(_cursorIndexOfId);
+            final String _tmpTitle;
+            _tmpTitle = _cursor.getString(_cursorIndexOfTitle);
+            final long _tmpCreatedAt;
+            _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
+            final long _tmpDurationMs;
+            _tmpDurationMs = _cursor.getLong(_cursorIndexOfDurationMs);
+            final SessionStatus _tmpStatus;
+            final String _tmp_1;
+            _tmp_1 = _cursor.getString(_cursorIndexOfStatus);
+            _tmpStatus = __converters.toStatus(_tmp_1);
+            final String _tmpTranscript;
+            if (_cursor.isNull(_cursorIndexOfTranscript)) {
+              _tmpTranscript = null;
+            } else {
+              _tmpTranscript = _cursor.getString(_cursorIndexOfTranscript);
+            }
+            final String _tmpSummary;
+            if (_cursor.isNull(_cursorIndexOfSummary)) {
+              _tmpSummary = null;
+            } else {
+              _tmpSummary = _cursor.getString(_cursorIndexOfSummary);
+            }
+            final String _tmpSummaryTitle;
+            if (_cursor.isNull(_cursorIndexOfSummaryTitle)) {
+              _tmpSummaryTitle = null;
+            } else {
+              _tmpSummaryTitle = _cursor.getString(_cursorIndexOfSummaryTitle);
+            }
+            final String _tmpActionItems;
+            if (_cursor.isNull(_cursorIndexOfActionItems)) {
+              _tmpActionItems = null;
+            } else {
+              _tmpActionItems = _cursor.getString(_cursorIndexOfActionItems);
+            }
+            final String _tmpKeyPoints;
+            if (_cursor.isNull(_cursorIndexOfKeyPoints)) {
+              _tmpKeyPoints = null;
+            } else {
+              _tmpKeyPoints = _cursor.getString(_cursorIndexOfKeyPoints);
+            }
+            final String _tmpErrorMessage;
+            if (_cursor.isNull(_cursorIndexOfErrorMessage)) {
+              _tmpErrorMessage = null;
+            } else {
+              _tmpErrorMessage = _cursor.getString(_cursorIndexOfErrorMessage);
+            }
+            _item = new SessionEntity(_tmpId,_tmpTitle,_tmpCreatedAt,_tmpDurationMs,_tmpStatus,_tmpTranscript,_tmpSummary,_tmpSummaryTitle,_tmpActionItems,_tmpKeyPoints,_tmpErrorMessage);
+            _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+          _statement.release();
+        }
+      }
+    }, $completion);
+  }
+
   @NonNull
   public static List<Class<?>> getRequiredConverters() {
     return Collections.emptyList();

@@ -48,6 +48,10 @@ interface SessionDao {
 
     @Query("DELETE FROM sessions WHERE id = :id")
     suspend fun deleteSession(id: String)
+
+
+    @Query("SELECT * FROM sessions WHERE status = :status")
+    suspend fun getSessionByStatus(status: SessionStatus): List<SessionEntity>
 }
 
 @Dao
@@ -70,4 +74,8 @@ interface AudioChunkDao {
 
     @Query("DELETE FROM audio_chunks WHERE sessionId = :sessionId")
     suspend fun deleteChunksForSession(sessionId: String)
+
+    @Query("SELECT * FROM audio_chunks WHERE id = :id LIMIT 1")
+    suspend fun getById(id: String): AudioChunkEntity?
+
 }

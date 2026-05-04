@@ -137,6 +137,7 @@ public final class TwinMindApp_HiltComponents {
           ApplicationContextModule.class,
           HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule.class,
           HiltWrapper_WorkerFactoryModule.class,
+          RecoveryWorker_HiltModule.class,
           SessionFinalizerWorker_HiltModule.class,
           SummaryWorker_HiltModule.class,
           TranscriptionWorker_HiltModule.class,
@@ -145,7 +146,8 @@ public final class TwinMindApp_HiltComponents {
       }
   )
   @Singleton
-  public abstract static class SingletonC implements TwinMindApp_GeneratedInjector,
+  public abstract static class SingletonC implements BootReceiver_GeneratedInjector,
+      TwinMindApp_GeneratedInjector,
       FragmentGetContextFix.FragmentGetContextFixEntryPoint,
       HiltWrapper_ActivityRetainedComponentManager_ActivityRetainedComponentBuilderEntryPoint,
       ServiceComponentManager.ServiceComponentBuilderEntryPoint,

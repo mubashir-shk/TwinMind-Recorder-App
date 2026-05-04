@@ -577,6 +577,8 @@ public final class DaggerTwinMindApp_HiltComponents_SingletonC {
 
     private Provider<RecordingRepository> recordingRepositoryProvider;
 
+    private Provider<RecoveryWorker_AssistedFactory> recoveryWorker_AssistedFactoryProvider;
+
     private Provider<SessionFinalizerWorker_AssistedFactory> sessionFinalizerWorker_AssistedFactoryProvider;
 
     private Provider<SummaryWorker_AssistedFactory> summaryWorker_AssistedFactoryProvider;
@@ -599,7 +601,7 @@ public final class DaggerTwinMindApp_HiltComponents_SingletonC {
 
     private Map<String, javax.inject.Provider<WorkerAssistedFactory<? extends ListenableWorker>>> mapOfStringAndProviderOfWorkerAssistedFactoryOf(
         ) {
-      return MapBuilder.<String, javax.inject.Provider<WorkerAssistedFactory<? extends ListenableWorker>>>newMapBuilder(3).put("com.twinmind.recorder.worker.SessionFinalizerWorker", ((Provider) sessionFinalizerWorker_AssistedFactoryProvider)).put("com.twinmind.recorder.worker.SummaryWorker", ((Provider) summaryWorker_AssistedFactoryProvider)).put("com.twinmind.recorder.worker.TranscriptionWorker", ((Provider) transcriptionWorker_AssistedFactoryProvider)).build();
+      return MapBuilder.<String, javax.inject.Provider<WorkerAssistedFactory<? extends ListenableWorker>>>newMapBuilder(4).put("com.twinmind.recorder.RecoveryWorker", ((Provider) recoveryWorker_AssistedFactoryProvider)).put("com.twinmind.recorder.worker.SessionFinalizerWorker", ((Provider) sessionFinalizerWorker_AssistedFactoryProvider)).put("com.twinmind.recorder.worker.SummaryWorker", ((Provider) summaryWorker_AssistedFactoryProvider)).put("com.twinmind.recorder.worker.TranscriptionWorker", ((Provider) transcriptionWorker_AssistedFactoryProvider)).build();
     }
 
     private HiltWorkerFactory hiltWorkerFactory() {
@@ -610,9 +612,14 @@ public final class DaggerTwinMindApp_HiltComponents_SingletonC {
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
       this.provideDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<AppDatabase>(singletonCImpl, 2));
       this.recordingRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<RecordingRepository>(singletonCImpl, 1));
-      this.sessionFinalizerWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<SessionFinalizerWorker_AssistedFactory>(singletonCImpl, 0));
-      this.summaryWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<SummaryWorker_AssistedFactory>(singletonCImpl, 3));
-      this.transcriptionWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<TranscriptionWorker_AssistedFactory>(singletonCImpl, 4));
+      this.recoveryWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<RecoveryWorker_AssistedFactory>(singletonCImpl, 0));
+      this.sessionFinalizerWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<SessionFinalizerWorker_AssistedFactory>(singletonCImpl, 3));
+      this.summaryWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<SummaryWorker_AssistedFactory>(singletonCImpl, 4));
+      this.transcriptionWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<TranscriptionWorker_AssistedFactory>(singletonCImpl, 5));
+    }
+
+    @Override
+    public void injectBootReceiver(BootReceiver bootReceiver) {
     }
 
     @Override
@@ -655,11 +662,11 @@ public final class DaggerTwinMindApp_HiltComponents_SingletonC {
       @Override
       public T get() {
         switch (id) {
-          case 0: // com.twinmind.recorder.worker.SessionFinalizerWorker_AssistedFactory 
-          return (T) new SessionFinalizerWorker_AssistedFactory() {
+          case 0: // com.twinmind.recorder.RecoveryWorker_AssistedFactory 
+          return (T) new RecoveryWorker_AssistedFactory() {
             @Override
-            public SessionFinalizerWorker create(Context context, WorkerParameters params) {
-              return new SessionFinalizerWorker(context, params, singletonCImpl.recordingRepositoryProvider.get());
+            public RecoveryWorker create(Context context, WorkerParameters params) {
+              return new RecoveryWorker(context, params, singletonCImpl.recordingRepositoryProvider.get());
             }
           };
 
@@ -669,19 +676,27 @@ public final class DaggerTwinMindApp_HiltComponents_SingletonC {
           case 2: // com.twinmind.recorder.data.local.AppDatabase 
           return (T) AppModule_ProvideDatabaseFactory.provideDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
-          case 3: // com.twinmind.recorder.worker.SummaryWorker_AssistedFactory 
-          return (T) new SummaryWorker_AssistedFactory() {
+          case 3: // com.twinmind.recorder.worker.SessionFinalizerWorker_AssistedFactory 
+          return (T) new SessionFinalizerWorker_AssistedFactory() {
             @Override
-            public SummaryWorker create(Context context2, WorkerParameters params2) {
-              return new SummaryWorker(context2, params2, singletonCImpl.recordingRepositoryProvider.get());
+            public SessionFinalizerWorker create(Context context2, WorkerParameters params2) {
+              return new SessionFinalizerWorker(context2, params2, singletonCImpl.recordingRepositoryProvider.get());
             }
           };
 
-          case 4: // com.twinmind.recorder.worker.TranscriptionWorker_AssistedFactory 
+          case 4: // com.twinmind.recorder.worker.SummaryWorker_AssistedFactory 
+          return (T) new SummaryWorker_AssistedFactory() {
+            @Override
+            public SummaryWorker create(Context context3, WorkerParameters params3) {
+              return new SummaryWorker(context3, params3, singletonCImpl.recordingRepositoryProvider.get());
+            }
+          };
+
+          case 5: // com.twinmind.recorder.worker.TranscriptionWorker_AssistedFactory 
           return (T) new TranscriptionWorker_AssistedFactory() {
             @Override
-            public TranscriptionWorker create(Context context3, WorkerParameters params3) {
-              return new TranscriptionWorker(context3, params3, singletonCImpl.recordingRepositoryProvider.get());
+            public TranscriptionWorker create(Context context4, WorkerParameters params4) {
+              return new TranscriptionWorker(context4, params4, singletonCImpl.recordingRepositoryProvider.get());
             }
           };
 
