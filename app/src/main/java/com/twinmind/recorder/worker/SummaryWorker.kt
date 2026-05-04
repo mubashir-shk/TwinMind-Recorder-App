@@ -3,6 +3,7 @@ package com.twinmind.recorder.worker
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
+import com.twinmind.recorder.BuildConfig
 import com.twinmind.recorder.data.repository.RecordingRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -16,6 +17,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
+private const val GEMINI_API_KEY = BuildConfig.GEMINI_API_KEY
+
 @HiltWorker
 class SummaryWorker @AssistedInject constructor(
     @Assisted context: Context,
@@ -28,7 +31,6 @@ class SummaryWorker @AssistedInject constructor(
         private const val MAX_RETRIES = 3
 
         // 🔑 Use BuildConfig.GEMINI_API_KEY if configured in build.gradle
-        private const val GEMINI_API_KEY = "AIzaSyBfupXPQ7UcFhz8E2ScQTYl0hxkc8BxUq8"
         private const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com"
         private const val GEMINI_MODEL = "gemini-2.5-flash"
 

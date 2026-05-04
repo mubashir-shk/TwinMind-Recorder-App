@@ -3,6 +3,7 @@ package com.twinmind.recorder.data.repository
 // data/repository/GeminiRepository.kt
 
 import android.util.Log
+import com.twinmind.recorder.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
@@ -20,7 +21,7 @@ class GeminiRepository @Inject constructor() {
 
     companion object {
         // 🔑 Put your Gemini API key here (or load from BuildConfig)
-        private const val API_KEY = "AIzaSyBfupXPQ7UcFhz8E2ScQTYl0hxkc8BxUq8"
+        private val API_KEY = BuildConfig.GEMINI_API_KEY
         private const val BASE_URL = "https://generativelanguage.googleapis.com"
         private const val MODEL = "gemini-1.5-flash" // free tier model
         private const val TAG = "GeminiRepository"
